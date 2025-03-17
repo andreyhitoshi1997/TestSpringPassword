@@ -1,45 +1,40 @@
-package com.example.testspringpassword;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.example.testspringpassword.TestSpringPasswordApplication;
 import com.example.testspringpassword.application.PasswordValidationService;
 import com.example.testspringpassword.domain.model.ValidationResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class LambdaHandler implements RequestHandler<String, ValidationResponse> {
+import java.util.HashMap;
+import java.util.Map;
+
+public class LambdaHandler implements RequestHandler<Map<String, Object>, Map<String, Object>> {
     private final PasswordValidationService service;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public LambdaHandler() {
-        try {
-            var context = new AnnotationConfigApplicationContext(TestSpringPasswordApplication.class);
-            this.service = context.getBean(PasswordValidationService.class);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize Spring context", e);
-        }
+        var context = new AnnotationConfigApplicationContext(TestSpringPasswordApplication.class);
+        this.service = context.getBean(PasswordValidationService.class);
     }
 
-    public ValidationResponse handleRequest(String input, Context context) {
+    @Override
+    public Map<String, Object> handleRequest(Map<String, Object> input, Context context) {
+        Map<String, Object> response = new HashMap<>();
         try {
-            String password;
-            context.getLogger().log("Raw input: " + input);
-            if (input.startsWith("{")) {
-                JsonNode jsonNode = objectMapper.readTree(input);
-                if (jsonNode.has("password")) {
-                    password = jsonNode.get("password").asText();
-                } else {
-                    return new ValidationResponse("Invalid input: 'password' field required", false);
-                }
-            } else {
-                password = input.trim().replaceAll("^\"|\"$", "");
-            }
-            context.getLogger().log("Processed password: " + password);
-            return service.validate(password);
+            String body = (String) input.get("body");
+            JsonNode jsonNode = objectMapper.readTree(body);
+            String password = jsonNode.get("password").asText();
+
+            ValidationResponse validation = service.validate(password);
+            response.put("statusCode", 200);
+            response.put("body", objectMapper.writeValueAsString(validation));
         } catch (Exception e) {
-            context.getLogger().log("Error: " + e.getMessage());
-            return new ValidationResponse("Internal Server Error: " + e.getMessage(), false);
+            response.put("statusCode", 500);
+            response.put("body", "{\"message\": \"Error: " + e.getMessage() + "\"}");
         }
+        response.put("headers", Map.of("Content-Type", "application/json"));
+        return response;
     }
 }
