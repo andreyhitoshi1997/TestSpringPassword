@@ -1,7 +1,5 @@
-com/example/testspringpassword/TestSpringPasswordApplication.class
-com/example/testspringpassword/LambdaHandler.class
 com/example/testspringpassword/domain/service/PasswordValidator.class
 com/example/testspringpassword/application/PasswordValidationService.class
-com/example/testspringpassword/infrastructure/controller/PasswordController.class
 com/example/testspringpassword/domain/model/ValidationResponse.class
 com/example/testspringpassword/domain/model/Password.class
+com/example/testspringpassword/LambdaHandler.class
