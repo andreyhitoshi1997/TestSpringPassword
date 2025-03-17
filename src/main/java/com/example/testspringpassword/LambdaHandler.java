@@ -19,7 +19,7 @@ public class LambdaHandler implements RequestHandler<Map<String, Object>, Map<St
     static {
         try {
             springContext = new AnnotationConfigApplicationContext("com.example.testspringpassword");
-            springContext.scan("com.example.TestSpringPasswordApplication");
+            springContext.scan("com.example.testspringpassword");
             springContext.refresh();
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize Spring context", e);
