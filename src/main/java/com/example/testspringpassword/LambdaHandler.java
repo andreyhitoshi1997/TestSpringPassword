@@ -23,17 +23,22 @@ public class LambdaHandler implements RequestHandler<String, ValidationResponse>
 
     public ValidationResponse handleRequest(String input, Context context) {
         try {
-            String cleanInput;
+            String password;
+            context.getLogger().log("Raw input: " + input);
             if (input.startsWith("{")) {
                 JsonNode jsonNode = objectMapper.readTree(input);
-                cleanInput = jsonNode.get("password").asText();
+                if (jsonNode.has("password")) {
+                    password = jsonNode.get("password").asText();
+                } else {
+                    return new ValidationResponse("Invalid input: 'password' field required", false);
+                }
             } else {
-                cleanInput = input.trim().replaceAll("^\"|\"$", "");
+                password = input.trim().replaceAll("^\"|\"$", "");
             }
-            context.getLogger().log("Received input: " + cleanInput);
-            return service.validate(cleanInput);
+            context.getLogger().log("Processed password: " + password);
+            return service.validate(password);
         } catch (Exception e) {
-            context.getLogger().log("Error processing input: " + e.getMessage());
+            context.getLogger().log("Error: " + e.getMessage());
             return new ValidationResponse("Internal Server Error: " + e.getMessage(), false);
         }
     }
