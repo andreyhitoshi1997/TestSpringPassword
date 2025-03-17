@@ -3,9 +3,7 @@ package com.example.testspringpassword.application;
 import com.example.testspringpassword.domain.model.Password;
 import com.example.testspringpassword.domain.model.ValidationResponse;
 import com.example.testspringpassword.domain.service.PasswordValidator;
-import org.springframework.stereotype.Service;
 
-@Service
 public class PasswordValidationService {
     private final PasswordValidator validator;
 
