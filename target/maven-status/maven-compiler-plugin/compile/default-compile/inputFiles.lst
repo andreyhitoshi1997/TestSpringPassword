@@ -1,7 +1,0 @@
-/home/andrey/IdeaProjects/TestSpringPassword/src/main/java/com/example/testspringpassword/domain/model/Password.java
-/home/andrey/IdeaProjects/TestSpringPassword/src/main/java/com/example/testspringpassword/domain/model/ValidationResponse.java
-/home/andrey/IdeaProjects/TestSpringPassword/src/main/java/com/example/testspringpassword/application/PasswordValidationService.java
-/home/andrey/IdeaProjects/TestSpringPassword/src/main/java/com/example/testspringpassword/TestSpringPasswordApplication.java
-/home/andrey/IdeaProjects/TestSpringPassword/src/main/java/com/example/testspringpassword/domain/service/PasswordValidator.java
-/home/andrey/IdeaProjects/TestSpringPassword/src/main/java/com/example/testspringpassword/LambdaHandler.java
-/home/andrey/IdeaProjects/TestSpringPassword/src/main/java/com/example/testspringpassword/infrastructure/controller/PasswordController.java
