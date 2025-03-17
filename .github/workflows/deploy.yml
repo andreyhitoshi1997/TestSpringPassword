@@ -20,4 +20,10 @@ jobs:
       - run: |
           aws lambda update-function-code \
             --function-name test-spring-password-lambda \
+            --zip-file fileb://target/testspringpassword-1.0-SNAPSHOT.jar || \
+          aws lambda create-function \
+            --function-name test-spring-password-lambda \
+            --runtime java17 \
+            --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/lambda-exec-role \
+            --handler com.example.testspringpassword.LambdaHandler::handleRequest \
             --zip-file fileb://target/testspringpassword-1.0-SNAPSHOT.jar
