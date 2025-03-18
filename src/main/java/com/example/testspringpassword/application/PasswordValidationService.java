@@ -14,7 +14,7 @@ public class PasswordValidationService {
     public ValidationResponse validate(String password) {
         boolean isValid = validator.isValid(new Password(password));
         return new ValidationResponse(
-                isValid ? "Password is valid." : "Password does not meet requirements.",
+                isValid ? "Password is valid. 1" : "Password does not meet requirements.",
                 isValid
         );
     }
