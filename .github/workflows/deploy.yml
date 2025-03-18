@@ -25,5 +25,5 @@ jobs:
             --function-name validate \
             --runtime java17 \
             --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/lambda-exec-role \
-            --handler com.example.testspringpassword.LambdaHandler::handleRequest \
+            --handler com.example.testspringpassword.infrastructure.LambdaHandler::handleRequest \
             --zip-file fileb://target/testspringpassword-1.0-SNAPSHOT.jar
