@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="TestSpringPassword" options="-parameters" />
+      <module name="TestSpringPassword" options="" />
     </option>
   </component>
 </project>
